@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.onlon.error.ReturnJsonException;
+
 /** 
 * @ClassName: FileController 
 * @Description: TODO(这里用一句话描述这个类的作用) 
@@ -35,6 +37,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
 	private String serverPath = "e:/";
+	
+	@RequestMapping("/hello")
+	public String hello() throws Exception {
+		throw new Exception("发生错误");
+	}
+	
+	@RequestMapping("/json")
+	public String json() throws ReturnJsonException {
+	throw new ReturnJsonException("发⽣错误2");
+	}
 	
 	@RequestMapping("/upload1")
 	public String upload1() {
