@@ -1,0 +1,21 @@
+#uploader {
+	width: 1024px;
+    border-color: red;
+    border-style: solid;
+    margin: auto;
+	
+}
+
+#dndArea {
+	width: 1000px;
+    height: 200px;
+    border-color: #ded7d7;
+    border-style: dashed;
+    margin: 10px;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.webuploader-container{
+    margin-left: 900px;
+}

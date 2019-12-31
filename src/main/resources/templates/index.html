@@ -2,9 +2,31 @@
 <html>
 <head lang="en">
 <meta charset="UTF-8" />
-<title></title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>使用webuploader上传</title>
+<!-- 1.引入文件 -->
+<link rel="stylesheet" type="text/css" href="/csslib/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/index.css">
+
+<script type="text/javascript" src="/jslib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/jslib/webuploader.js"></script>
+<style type="text/css">
+	
+</style>
 </head>
 <body>
-<h1 th:text="${host}">Hello World</h1>
+	<!-- 2.创建页面元素 -->
+	<div id="uploader">
+		<!-- 创建用于拖拽的区域 -->
+		<div id="dndArea">把文件拖进来即可<br/><br/>或是点击<br/><br/>右下角“文件上传</div>
+		
+		<!-- 用于显示文件列表 -->
+		<div id="fileList"></div>
+		<!-- 用于选择文件 -->
+		<div id="filePicker" class="upload_btn">文件上传</div>
+	</div>
+<!-- 3.添加js代码 -->
+<script type="text/javascript" src="/index.js"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils;
 public class FileUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String serverPath = "e:/";
+	private String serverPath = "e:/tmp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
