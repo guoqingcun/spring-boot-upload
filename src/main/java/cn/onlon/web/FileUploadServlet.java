@@ -3,32 +3,39 @@ package cn.onlon.web;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
- * Servlet user to accept file upload
+ * 
+ * @ClassName: FileUploadServlet
+ * @Description: TODO(文件上传)
+ * @author GuoQingcun
+ * @date 2020-01-02 04:00:41
  */
 @WebServlet(name = "FileUploadServlet", urlPatterns = "/FileUploadServlet")
 public class FileUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String serverPath = "e:/tmp";
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Value("${file.upload.directory}")
+	public String FILE_DIRECTORY = "e:/tmp/";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		System.out.println("进入后台...");
 
 		// 1.创建DiskFileItemFactory对象，配置缓存用
 		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
@@ -52,32 +59,24 @@ public class FileUploadServlet extends HttpServlet {
 					String fieldName = fileItem.getFieldName();
 					if ("info".equals(fieldName)) {
 						String info = fileItem.getString("utf-8");
-						System.out.println("info:" + info);
+						logger.info("info:{}",info);
 					}
 					if ("fileMd5".equals(fieldName)) {
 						fileMd5 = fileItem.getString("utf-8");
-						System.out.println("fileMd5:" + fileMd5);
+						logger.info("fileMd5:{}",fileMd5);
 					}
 					if ("chunk".equals(fieldName)) {
 						chunk = fileItem.getString("utf-8");
-						System.out.println("chunk:" + chunk);
+						logger.info("chunk:{}",chunk);
 					}
 				} else { // >> 文件
-					/*// 1. 获取文件名称
-					String name = fileItem.getName();
-					// 2. 获取文件的实际内容
-					InputStream is = fileItem.getInputStream();
-					
-					// 3. 保存文件
-					FileUtils.copyInputStreamToFile(is, new File(serverPath + "/" + name));*/
-
 					// 如果文件夹没有创建文件夹
-					File file = new File(serverPath + "/" + fileMd5);
+					File file = new File(FILE_DIRECTORY + "/" + fileMd5);
 					if (!file.exists()) {
 						file.mkdirs();
 					}
 					// 保存文件
-					File chunkFile = new File(serverPath + "/" + fileMd5 + "/" + chunk);
+					File chunkFile = new File(FILE_DIRECTORY + "/" + fileMd5 + "/" + chunk);
 					FileUtils.copyInputStreamToFile(fileItem.getInputStream(), chunkFile);
 
 				}
@@ -85,7 +84,7 @@ public class FileUploadServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("上传文件过程异常",e);
 		}
 
 	}

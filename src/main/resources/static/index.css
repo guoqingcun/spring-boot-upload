@@ -8,7 +8,6 @@
 
 #dndArea {
 	width: 1000px;
-    height: 200px;
     border-color: #ded7d7;
     border-style: dashed;
     margin: 10px;
@@ -18,4 +17,19 @@
 
 .webuploader-container{
     margin-left: 900px;
+}
+.thumb{
+	padding: 20px 50px 0px 50px;
+}
+.uploadInfo{
+    width: 200px;
+    padding: 20px 50px 0px 50px;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+.dlDiv{
+	width: 1024px;
+    text-align: center;
+    margin: 10px;
 }

@@ -1,6 +1,7 @@
 // 监听分块上传的时间点，断点续传
 var fileMd5;
-var chunkSize = 1024 * 1024;//1k
+var fileName;
+var chunkSize = 1 * 1024 * 1024;//1M
 /**
  * 配置发送过程
  */
@@ -20,6 +21,7 @@ WebUploader.Uploader.register({
 				})
 				.then(function(val) {
 					fileMd5 = val;
+					fileName = file.name
 					$("#" + file.id).find("span.state").text("成功获取文件信息");
 					// 放行
 					deferred.resolve();
@@ -69,10 +71,11 @@ WebUploader.Uploader.register({
 					type:"POST",
 					url:"/UploadActionServlet?action=mergeChunks",
 					data:{
-						fileMd5:fileMd5
+						fileMd5:fileMd5,
+						fileName:fileName
 					},
 					success:function(response){
-						
+						$("#dl"+file.id).append("复制下载地址:"+window.location.href+"DownloadActionServlet?FN="+fileMd5+"")
 					}
 				}
 			);
@@ -93,8 +96,8 @@ var uploader = WebUploader.create(
 		disableGlobalDnd:true,
 		paste:"#uploader",
 		chunked:true,// 是否分块
-		chunkSize:chunkSize,// 每块文件大小（默认5M）,在此设置为1k
-		threads:10,// 开启几个并非线程（默认3个）
+		chunkSize:chunkSize,// 每块文件大小（默认5M）,
+		threads:5,// 开启几个并非线程（默认3个）
 		chunkRetry:5, //默认值：2
 		prepareNextFile:true// 在上传当前文件时，准备好下一个文件
 	}		
@@ -107,14 +110,14 @@ var uploader = WebUploader.create(
  */
 uploader.on("fileQueued", function(file) {
 		// 把文件信息追加到fileList的div中
-		$("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='state'></span></div><div><span class='percentage'></span></div></div>");
+		$("#fileList").append("<div id='" + file.id + "'><img class='thumb'/><span class='uploadInfo'>" + file.name + "</span><span class='state uploadInfo'></span><span class='percentage uploadInfo'></span></div><div id='dl"+file.id+"' class='dlDiv'></div>");
 		
 		// 制作缩略图
 		// error：不是图片，则有error
 		// src:代表生成缩略图的地址
 		uploader.makeThumb(file, function(error, src) {
 			if (error) {
-				$("#" + file.id).find("img").replaceWith("<span>无法预览&nbsp;</span>");
+				$("#" + file.id).find("img").replaceWith("<span class='thumb'>无法预览&nbsp;</span>");
 			} else {
 				$("#" + file.id).find("img").attr("src", src);
 			}
