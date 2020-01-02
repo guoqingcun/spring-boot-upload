@@ -9,9 +9,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cn.onlon</groupId>
-	<artifactId>jdbc</artifactId>
+	<artifactId>upload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-jdbc</name>
+	<name>spring-boot-upload</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

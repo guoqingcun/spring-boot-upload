@@ -30,7 +30,7 @@ public class DownloadActionServlet extends HttpServlet {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Value("${file.upload.directory}")
-	public String FILE_DIRECTORY = "e:/tmp/";
+	public String FILE_DIRECTORY;
 
 	/**
 	 * 下载主方法

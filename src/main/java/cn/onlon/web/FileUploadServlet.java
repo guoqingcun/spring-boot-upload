@@ -30,7 +30,7 @@ public class FileUploadServlet extends HttpServlet {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Value("${file.upload.directory}")
-	public String FILE_DIRECTORY = "e:/tmp/";
+	public String FILE_DIRECTORY;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
